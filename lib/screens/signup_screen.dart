@@ -30,7 +30,9 @@ class _SignupScreenState extends State<SignupScreen> {
   // late var scale = 1.0;
   bool _isLoading = false;
 
+   @override
   void dispose() {
+    
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
