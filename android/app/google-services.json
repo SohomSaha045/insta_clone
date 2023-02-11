@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "653809417802",
+    "project_id": "sohoms-insta-clone",
+    "storage_bucket": "sohoms-insta-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653809417802:android:7f1d0c4656d6e9823970b3",
+        "android_client_info": {
+          "package_name": "com.example.insta_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "653809417802-k8pcrv13pd5md3vvs7r9drd5jkj09pn9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKVS4gUMjvJ_uSEb_ZiIPMGpAy1u6g4PE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "653809417802-k8pcrv13pd5md3vvs7r9drd5jkj09pn9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
