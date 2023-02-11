@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:insta_clone/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../utils/dimensions.dart';
+import '../utils/global.dart';
 
 class ResposiveLayout extends StatefulWidget {
   final Widget webScreenLayout;
