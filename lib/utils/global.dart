@@ -6,7 +6,7 @@ import '../screens/feed_screen.dart';
 const webScreenSize = 600;
 
 const homeScreenIcons = [
-  FeedScreen(),
+          FeedScreen(),
           Text('search'),
           AddPostScreen(),
           Text('notification'),
