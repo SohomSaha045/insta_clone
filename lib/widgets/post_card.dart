@@ -22,28 +22,8 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   bool isLikeAnimating = false;
-  // int commentLen = 0;
   @override
-  // void initState() {
-  //   super.initState();
-  //   // getComments();
-  // }
-
-  // void getComments() async {
-  //   try {
-  //     QuerySnapshot snap = await FirebaseFirestore.instance
-  //         .collection('post')
-  //         .doc(widget.snap['postId'])
-  //         .collection('comments')
-  //         .get();
-  //     commentLen = snap.docs.length;
-  //   } catch (e) {
-  //     showSnackBar(e.toString(), context);
-  //     // print(e.toString());
-  //     setState(() {});
-  //   }
-  // }
-
+  
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
