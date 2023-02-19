@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CommentCard extends StatefulWidget {
-  const CommentCard({super.key});
+  final snap;
+  const CommentCard({Key? key, required this.snap}) : super(key: key);
+
 
   @override
   State<CommentCard> createState() => _CommentCardState();
@@ -16,7 +19,7 @@ class _CommentCardState extends State<CommentCard> {
         children: [
           CircleAvatar(
             backgroundImage: NetworkImage(
-                "https://firebasestorage.googleapis.com/v0/b/sohoms-insta-clone.appspot.com/o/profilePics%2F3UH1tz5ca0ZYm4UfMu3DpP2iYq03?alt=media&token=dbe58430-f882-4e91-9e3a-eafa1d0a1640"),
+                widget.snap['profilePic']),
             radius: 18,
           ),
           Expanded(
@@ -29,22 +32,31 @@ class _CommentCardState extends State<CommentCard> {
                   RichText(
                       text: TextSpan(children: [
                     TextSpan(
-                        text: 'username',
+                        text: '${ widget.snap['name']}',
                         style: const TextStyle(fontWeight: FontWeight.bold)),
                     TextSpan(
-                      text: '  some description to enter',
+                      text: '  ${ widget.snap['text']}',
                     ),
-                  ])
-                  ),
-                  Padding(padding: const EdgeInsets.only(top: 4),
-                  child: Text('23/12/21',style:TextStyle(fontSize:12,fontWeight: FontWeight.w400 ),),)
+                  ])),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      DateFormat.yMMMd().format(
+                        widget.snap['datePublished'].toDate(),),
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                    ),
+                  )
                 ],
               ),
             ),
           ),
           Container(
             padding: const EdgeInsets.all(8),
-            child:const  Icon(Icons.favorite,size: 16,),
+            child: const Icon(
+              Icons.favorite,
+              size: 16,
+            ),
           )
         ],
       ),

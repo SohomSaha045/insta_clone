@@ -1,25 +1,63 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:insta_clone/providers/user_provider.dart';
 import 'package:insta_clone/utils/colors.dart';
+import 'package:provider/provider.dart';
 
+import '../models/user.dart';
+import '../resources/firestore_methods.dart';
 import '../widgets/comment_card.dart';
 
 class Comments extends StatefulWidget {
-  const Comments({super.key});
+  final snap;
+  const Comments({Key? key, required this.snap}) : super(key: key);
 
   @override
   State<Comments> createState() => _CommentsState();
 }
 
 class _CommentsState extends State<Comments> {
+  final TextEditingController _commentController = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _commentController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final User user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
         title: const Text('Comments'),
         centerTitle: false,
       ),
-      body: CommentCard(),
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection('post')
+              .doc(widget.snap['postId'])
+              .collection('comments')
+              .orderBy('datePublished',descending: true)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return ListView.builder(
+                  itemCount: (snapshot.data! as dynamic).docs.length,
+                  itemBuilder: (context, index) => CommentCard(
+                    snap:(snapshot.data!).docs[index].data(),
+        
+
+                  ));
+            }
+          }),
       bottomNavigationBar: SafeArea(
           child: Container(
         height: kToolbarHeight,
@@ -27,30 +65,40 @@ class _CommentsState extends State<Comments> {
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         padding: EdgeInsets.only(left: 16, right: 8),
         child: Row(
-        
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage("https://firebasestorage.googleapis.com/v0/b/sohoms-insta-clone.appspot.com/o/profilePics%2F3UH1tz5ca0ZYm4UfMu3DpP2iYq03?alt=media&token=dbe58430-f882-4e91-9e3a-eafa1d0a1640"),
+              backgroundImage: NetworkImage(user.photoUrl),
               radius: 18,
-
             ),
             Expanded(
               child: Padding(
-                
-                padding: const EdgeInsets.only(left:16,right: 8),
+                padding: const EdgeInsets.only(left: 16, right: 8),
                 child: TextField(
+                  controller: _commentController,
                   decoration: InputDecoration(
-                    hintText: 'Comment as usename',
-                    border: InputBorder.none
-                  ),
+                      hintText: 'Comment as ${user.username}',
+                      border: InputBorder.none),
                 ),
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: () async {
+                await FirestoreMethods().postComment(
+                    widget.snap['postId'],
+                    _commentController.text,
+                    user.uid,
+                    user.username,
+                    user.photoUrl);
+                setState(() {
+                  _commentController.text = "";
+                });
+              },
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 8) ,
-                child: const Text('Post',style: TextStyle(color: blueColor),),
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                child: const Text(
+                  'Post',
+                  style: TextStyle(color: blueColor),
+                ),
               ),
             )
           ],
