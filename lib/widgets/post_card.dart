@@ -23,7 +23,6 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   bool isLikeAnimating = false;
   @override
-  
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
@@ -50,7 +49,7 @@ class _PostCardState extends State<PostCard> {
                     children: [
                       Text(
                         widget.snap['username'],
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
@@ -68,7 +67,10 @@ class _PostCardState extends State<PostCard> {
                             ]
                                 .map(
                                   (e) => InkWell(
-                                    onTap: () {},
+                                    onTap: () async {
+                                      FirestoreMethods().deletePost(widget.snap['postId']);
+                                      Navigator.of(context).pop();
+                                    },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 12, horizontal: 16),
@@ -87,7 +89,7 @@ class _PostCardState extends State<PostCard> {
             //Image Section
           ),
           Container(
-            padding: EdgeInsets.only(top: 5),
+            padding: const EdgeInsets.only(top: 5),
           ),
           GestureDetector(
             onDoubleTap: () async {
@@ -200,7 +202,7 @@ class _PostCardState extends State<PostCard> {
                           children: [
                         TextSpan(
                           text: widget.snap['username'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -214,8 +216,7 @@ class _PostCardState extends State<PostCard> {
                 ),
                 InkWell(
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 4),
-                   
+                    padding: const EdgeInsets.symmetric(vertical: 4),
                     child: StreamBuilder(
                         stream: FirebaseFirestore.instance
                             .collection('post')
@@ -240,7 +241,7 @@ class _PostCardState extends State<PostCard> {
                         widget.snap['datePublished'].toDate(),
                         // '21 December',
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: secondaryColor,
                       ),

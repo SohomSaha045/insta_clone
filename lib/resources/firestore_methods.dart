@@ -82,4 +82,15 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
+
+  // Deleting the post
+  Future<void> deletePost(String postId) async {
+    try {
+      await _firestore.collection('post').doc(postId).delete();
+      print("s");
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+     
 }
