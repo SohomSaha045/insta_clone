@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:insta_clone/screens/search_scrreen.dart';
 
@@ -7,10 +8,10 @@ import '../screens/profile_screen.dart';
 
 const webScreenSize = 600;
 
-const homeScreenIcons = [
-          FeedScreen(),
-          SearchScreen(),
-          AddPostScreen(),
-          Text('notification'),
-          ProfileScreen()
+List<Widget> homeScreenIcons = [
+          const FeedScreen(),
+          const SearchScreen(),
+          const AddPostScreen(),
+          const Text('notification'),
+          ProfileScreen(uid: FirebaseAuth.instance.currentUser!.uid,),
   ];
